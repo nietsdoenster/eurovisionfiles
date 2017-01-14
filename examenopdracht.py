@@ -29,8 +29,6 @@ for t in tests:
 print(salutations)
 print(greetees)
 
-#for t in tests:
-	#print(t, "->", greeting.parseString(t))
 # 24 lines of code
 #Importing random salutations
 
@@ -67,7 +65,7 @@ eurosong = text.splitlines()
 print(eurosong)
 
 #print(text) just to make sure everything went well: and it luckily did! 
-from pyparsing import Word, alphas, OneOrMore, nums, Group, Literal, Suppress, Combine
+from pyparsing import Word, alphas, OneOrMore, nums, Group, Literal, Suppress, Combine #number of lines:50
 #word = Word( alphas +"'.")
 word = Word(alphas)
 num = Word(nums)
@@ -108,11 +106,13 @@ with open('euro2016.csv', 'r') as csvfile:
 		countries.append(row[0])
 		#print(row[0])
 
-
-country_string = str(countries)
-country_string = country_string.split()
-print(len(country_string))
-print(country_string)
+print(type(countries))
+mylist = countries
+print(mylist)
+#country_string = str(countries)
+#country_string = country_string.split()
+#print(len(country_string))
+#print(country_string)
 unique_countries = set(countries)
 sorted_unique_countries = sorted(unique_countries)
 print(sorted_unique_countries) #prints the countries in alphabetical order, pretty
@@ -120,16 +120,141 @@ print(sorted_unique_countries) #prints the countries in alphabetical order, pret
 print(len(unique_countries)) #How many separate countries did parttake at the eurovision songcontest?
 # now we are going to divide the countries into Western Europe, Southern Europe, North Europe, Eastern Europe and 'others'
 #count = 1
-westerneurope = ['United Kingdom', 'Germany', 'France', 'Austria', 'Belgium', 'Netherlands', 'Luxembourg']
-def count_westerncountries(country_string, westerneurope):
+
+csvfile = open('euro2016.csv', 'r')
+readmyfile = csv.reader(csvfile, delimiter=';')
+westerneurope = ('United Kingdom', 'Germany', 'France', 'Austria', 'Belgium', 'Netherlands', 'Luxembourg')
+
+def count_westerncountries(tokens):
+	first1 = tokens
 	count = 0
-	for country in country_string:
-		if country in westerneurope:
-			count += 1
-		return count
-print(count_westerncountries(country_string, westerneurope))
-#Does not seem to be properly working yet
+	for token in first1:
+		if token in ['United Kingdom', 'Germany', 'France', 'Austria', 'Belgium', 'Netherlands', 'Luxembourg', 'Switzerland', 'Liechtenstein', 'Ireland']:
+			count +=1
+		else:
+			None
+	return count
+
+print(count_westerncountries(mylist))
+numberofwesteuropeancountries = count_westerncountries(mylist)
+print("The number of West European entries, for instance from Germany or Belgium, in the years 2015-2016 -summed up- is:", numberofwesteuropeancountries)
+print("================") #100 lines
+
+def count_northerncountries(tokens):
+	first1 = tokens
+	count = 0
+	for token in first1:
+		if token in ['Norway', 'Sweden', 'Denmark', 'Iceland']:
+			count +=1
+		else:
+			None
+	return count
+
+print(count_northerncountries(mylist))
+numberofscandinaviancountries = count_northerncountries(mylist)
+print("The number of Scandinavian entries, for instance from Norway or Iceland, in the years 2015-2016 -summed up- is:", numberofscandinaviancountries)
 print("=================")
+
+def count_southerncountries(tokens):
+	first1 = tokens
+	count = 0
+	for token in first1:
+		if token in ['Spain', 'Portugal', 'Italy', 'San Marino', 'Andorra', 'Monaco', 'Greece', 'Cyprus', 'Malta']:
+			count +=1
+		else:
+			None
+	return count
+
+print(count_southerncountries(mylist))
+numberofsoutheuropeancountries = count_southerncountries(mylist)
+print("The number of South European entries, for instance Greece and Italy, in the years 2015-2016 -summed up- is:", numberofsoutheuropeancountries)
+print("=================")
+
+def count_balticstatesandfinland(tokens):
+	first1 = tokens
+	count = 0
+	for token in first1:
+		if token in ['Finland', 'Estonia', 'Latvia', 'Lithuania']:
+			count +=1
+		else:
+			None
+	return count
+
+print(count_balticstatesandfinland(mylist))
+numberofbalticcountries = count_balticstatesandfinland(mylist)
+print("The number of entries from the Baltic States and Finland, in the years 2015-2016 -summed up- is:", numberofbalticcountries)
+print("=================")
+
+def count_non_europeancountries(tokens): 
+	first1 = tokens
+	count = 0
+	for token in first1:
+		if token in ['Australia', 'Georgia', 'Armenia', 'Turkey', 'Azerbaijan', 'Israel']:
+			count +=1
+		else:
+			None
+	return count
+
+print(count_non_europeancountries(mylist))
+numberofnoneuropeancountries = count_non_europeancountries(mylist)
+print("The number of entries from Non-European countries, like Australia or Georgia, in the years 2015-2016 -summed up- is:", numberofnoneuropeancountries)
+print("=================")
+
+def count_slavic_countries(tokens):
+	first1 = tokens
+	count = 0
+	for token in first1:
+		if token in ['Poland', 'Russia', 'Ukraine', 'Czech Republic', 'Belarus', 'Slovakia']:
+			count +=1
+		else:
+			None
+	return count
+
+print(count_slavic_countries(mylist))
+numberofslaviccountries = count_slavic_countries(mylist)
+print("The number of entries from Slavic countries, like Russia and Ukraine, in the years 2015-2016 -summed up- is:", numberofslaviccountries)
+print("=================")
+
+def count_southern_slavic_countries(tokens):
+	first1 = tokens
+	count = 0
+	for token in first1:
+		if token in ['Bosnia and Herzegovina', 'Croatia', 'Serbia', 'Montenegro', 'Bulgaria', 'Macedonia']:
+			count +=1
+		else:
+			None
+	return count
+
+print(count_southern_slavic_countries(mylist))
+numberofsouthernslaviccountries = count_southern_slavic_countries(mylist)
+print("The number of entries from Southern Slavic countries, like Serbia and Croatia, in the years 2015-2016 -summed up- is:", numberofsouthernslaviccountries)
+print("=================")
+
+def count_other_countries(tokens):
+	first1 = tokens
+	count = 0
+	for token in first1:
+		if token in ['Hungary', 'Albania', 'Moldova', 'Moldavia', 'Romania']:
+			count +=1
+		else:
+			None
+	return count
+
+print(count_other_countries(mylist))
+numberofothercountries = count_other_countries(mylist)
+print("The number of 'odd ones out' (countries that cannot be easily grouped into another categorie) is:", numberofothercountries)
+print("=================")
+
+
+import csv
+with open('euro2016.csv', 'r') as csvfile:
+	points = []
+	readFILE = csv.reader(csvfile, delimiter=';')
+	for row in readFILE:
+		points.append(row[1])
+
+pointspercountry = list(zip(countries, points))
+print(sorted(pointspercountry))
 
 import csv
 with open('euro2016.csv', 'r') as csvfile:
@@ -139,15 +264,15 @@ with open('euro2016.csv', 'r') as csvfile:
 		years.append(row[2])
 		#print(row[2])
 csvfile.close()
-separate_years = set(years)
+separate_years = set(years) #200 lines
 separate_years.remove(0) #removed an unnecessary zero from the output. I had no idea where the zero came from, but the problem was easily solved this way.
 sorted_separate_years = sorted(separate_years)
 print("The years that were examined -summed up- are", sorted_separate_years)
 year_count = len(separate_years) #Number of years 
-print("The amount of years that have been examined in this study", year_count)
-#91 lines of code
+print("The amount of years that have been examined in this study equals the amount", year_count)
 
-print("I push a change!")
+#'Approximately 205 lines of code
+
 #CountryandScore = country + points
 #CountryandScore = Group(country.setResultsName("country")+points.setResultsName("score"))
 #euroResult = CountryandScore.setResultsName("country score")+year.setResultsName("year")
