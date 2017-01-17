@@ -52,6 +52,11 @@ import csv
 with open('resulteurovision2016.csv', 'r') as csvfile:
 	datareader = csv.reader(csvfile)
 	my_list = list(datareader)
+# below my first eurovision statistics! 
+num_lines = sum(1 for line in open('euro2016.csv'))
+print("The number of entries in the years 2013, 2014, 2015 and 2016 were in total:", num_lines) #number of entries in the years 2015 - 2016 in total 
+averageamountcontestants = num_lines / 4
+print(averageamountcontestants)
 
 csvfile = open('resulteurovision2016.csv', 'r')
 text = csvfile.read()
@@ -105,24 +110,14 @@ for x in mylist:
 	frequency[x] +=1
 
 print(frequency)
-
-
-num_lines = sum(1 for line in open('euro2016.csv'))
-print("The number of entries in the years 2013, 2014, 2015 and 2016 were in total:", num_lines) #number of entries in the years 2015 - 2016 in total 
-print("===========")
-averageamountcontestants = num_lines / 4
-print(averageamountcontestants)
-
-print("===========")
+#country_string = str(countries)
+#country_string = country_string.split()
+#print(len(country_string))
+#print(country_string)
 unique_countries = set(countries)
-print("The total number of individual UNIQUE contestants is:", len(unique_countries)) 
-print("===========")
-sorted_unique_countries = sorted(unique_countries) #prints the countries in alphabetical order, pretty
-for x in sorted_unique_countries:
-	print(sorted_unique_countries.index(x) +1, end=' ')
-	print(" ", x)
-print("===========")
-#How many separate countries did parttake at the eurovision songcontest?
+sorted_unique_countries = sorted(unique_countries)
+print(sorted_unique_countries) #prints the countries in alphabetical order, pretty
+print("The number of individual contestants is:", len(unique_countries)) #How many separate countries did parttake at the eurovision songcontest?
 # now we are going to divide the countries into Western Europe, Southern Europe, North Europe, Eastern Europe and 'others'
 #count = 1
 
@@ -275,7 +270,7 @@ with open('euro2016.csv', 'r') as csvfile:
 	years = [0]
 	reader = csv.reader(csvfile, delimiter=';')
 	for row in reader:
-		years.append(row[2]) # 200
+		years.append(row[2])
 		#print(row[2])
 csvfile.close()
 separate_years = set(years) #200 lines
@@ -427,7 +422,7 @@ print("Countries that were in the finals in 2015:", sorted(countries2015))
 print("===========")
 
 points2015 = []
-for row in rowsyear2015: #300
+for row in rowsyear2015:
 	points2015.append(row[1])
 pointspercountry2015 = list(zip(countries2015, points2015))
 pointspercountry2015sorted = sorted(pointspercountry2015)
@@ -576,4 +571,3 @@ winnerresult = max(results1)
 loserresult = min(results1)
 print("The winner of Eurovision 2014 is:", winner, "with", winnerresult, "points.") 
 print("The loser of Eurovision 2014 is:", loser, "with", loserresult, "points.")
-# 355 + 62 = 417
