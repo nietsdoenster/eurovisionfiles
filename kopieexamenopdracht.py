@@ -52,11 +52,6 @@ import csv
 with open('resulteurovision2016.csv', 'r') as csvfile:
 	datareader = csv.reader(csvfile)
 	my_list = list(datareader)
-# below my first eurovision statistics! 
-num_lines = sum(1 for line in open('euro2016.csv'))
-print("The number of entries in the years 2013, 2014, 2015 and 2016 were in total:", num_lines) #number of entries in the years 2015 - 2016 in total 
-averageamountcontestants = num_lines / 4
-print(averageamountcontestants)
 
 csvfile = open('resulteurovision2016.csv', 'r')
 text = csvfile.read()
@@ -102,22 +97,41 @@ with open('euro2016.csv', 'r') as csvfile:
 	readFILE = csv.reader(csvfile, delimiter=';')
 	for row in readFILE:
 		countries.append(row[0])
-
 mylist = countries
+
 from collections import defaultdict
 frequency = defaultdict(int)
 for x in mylist:
 	frequency[x] +=1
-
 print(frequency)
-#country_string = str(countries)
-#country_string = country_string.split()
-#print(len(country_string))
-#print(country_string)
+
+print("===========")
+
+items = []
+for item in mylist:
+	if item not in items:
+		items.append(item)
+for item in sorted(items):
+	print(item, mylist.count(item))
+
+print("===========")
+
+num_lines = sum(1 for line in open('euro2016.csv'))
+print("The number of entries in the years 2013, 2014, 2015 and 2016 were in total:", num_lines) #number of entries in the years 2015 - 2016 in total 
+print("===========")
+averageamountcontestants = num_lines / 4
+print(averageamountcontestants)
+
+print("===========")
 unique_countries = set(countries)
-sorted_unique_countries = sorted(unique_countries)
-print(sorted_unique_countries) #prints the countries in alphabetical order, pretty
-print("The number of individual contestants is:", len(unique_countries)) #How many separate countries did parttake at the eurovision songcontest?
+print("The total number of individual UNIQUE contestants is:", len(unique_countries)) 
+print("===========")
+sorted_unique_countries = sorted(unique_countries) #prints the countries in alphabetical order, pretty
+for x in sorted_unique_countries:
+	print(sorted_unique_countries.index(x) +1, end=' ')
+	print(" ", x)
+print("===========")
+#How many separate countries did parttake at the eurovision songcontest?
 # now we are going to divide the countries into Western Europe, Southern Europe, North Europe, Eastern Europe and 'others'
 #count = 1
 
@@ -270,7 +284,7 @@ with open('euro2016.csv', 'r') as csvfile:
 	years = [0]
 	reader = csv.reader(csvfile, delimiter=';')
 	for row in reader:
-		years.append(row[2])
+		years.append(row[2]) # 200
 		#print(row[2])
 csvfile.close()
 separate_years = set(years) #200 lines
@@ -303,18 +317,7 @@ percentagesouthslavic = round(percentage(numberofsouthernslaviccountries, num_li
 print("The percentage of Southern Slavic countries partaking is:", percentagesouthslavic, "%")
 percentageother = round(percentage(numberofothercountries, num_lines), 2)
 print("The percentage of the 'odd ones out' partaking is:", percentageother, "%")
-#Nog te doen: percentage mooier ordenen! Minder decimalen. Extra uitdaging: % teken erachter
- 
-
-#CountryandScore = country + points
-#CountryandScore = Group(country.setResultsName("country")+points.setResultsName("score"))
-#euroResult = CountryandScore.setResultsName("country score")+year.setResultsName("year")
-#for result in eurosong:
-#	stats = (euroResult).parseString(test)
-#	if CountryandScore != CountryandScore:
-#		if points > points:
-#			result = "won by" + CountryandScore
-#print(result) #that did not work 
+#Nog te doen: percentage mooier ordenen! Minder decimalen. Extra uitdaging: % teken erachter 
 
 import csv
 from itertools import islice #islice = interesting little tool that I found on the world wide web
@@ -422,7 +425,7 @@ print("Countries that were in the finals in 2015:", sorted(countries2015))
 print("===========")
 
 points2015 = []
-for row in rowsyear2015:
+for row in rowsyear2015: #300
 	points2015.append(row[1])
 pointspercountry2015 = list(zip(countries2015, points2015))
 pointspercountry2015sorted = sorted(pointspercountry2015)
@@ -549,9 +552,6 @@ for result in results:
 	result = int(result)
 	results1.append(result)
 
-scorebord2016 = zip(countries,results1)
-
-
 count = 0
 for country, result in zip(countries,results1):
 	if result > count:
@@ -571,3 +571,44 @@ winnerresult = max(results1)
 loserresult = min(results1)
 print("The winner of Eurovision 2014 is:", winner, "with", winnerresult, "points.") 
 print("The loser of Eurovision 2014 is:", loser, "with", loserresult, "points.")
+
+print("===========")
+
+import csv
+d = dict()
+#In the file 'resultsallyears' I use the same data as in the file 'euro2016', but I edited the results from 2016, because the results in this year were doubled
+#every country got to award two sets of votes: one from their professional jury and the other from televoting
+#Therefore, I divided the results of this year in two, otherwise it would give an unrealistic overview of the most successful countries. 
+with open('resultsallyears.csv', 'r') as csvfile:
+	readFILE = csv.reader(csvfile, delimiter=';')
+	countriesallyears = []
+	for row in readFILE:
+		if row[0] in countriesallyears:
+			d[row[0]] = d[row[0]] + int(row[1])
+		else:
+			countriesallyears.append(row[0])
+			d[row[0]] = int(row[1])
+csvfile.close()
+
+
+print(d) #type = dict
+print("===========")
+
+def keywithmaxval(d):
+	v = list(d.values())
+	k = list(d.keys())
+	return k[v.index(max(v))]
+
+mostsuccessfulcountry = keywithmaxval(d)
+print("The most successful country throughout the years of Eurovision was:", mostsuccessfulcountry)
+#441 lijnen
+print("===========")
+def keywithminval(d):
+	v = list(d.values())
+	k = list(d.keys())
+	return k[v.index(min(v))]
+leastsuccesfulcountry = keywithminval(d)
+print("The least succesful country throughout the years of Eurovision was:", leastsuccesfulcountry)
+
+top5countries = sorted(d, key =d.get, reverse=True)[:5]
+print(top5countries)

@@ -59,7 +59,7 @@ csvfile.close()
 eurosong = text.splitlines()
 
 #print(text) just to make sure everything went well: and it luckily did! 
-from pyparsing import Word, alphas, OneOrMore, nums, Group, Literal, Suppress, Combine #number of lines:50
+from pyparsing import Word, alphas, OneOrMore, nums, Group, Literal, Suppress, Combine 
 #word = Word( alphas +"'.")
 word = Word(alphas)
 num = Word(nums)
@@ -97,15 +97,24 @@ with open('euro2016.csv', 'r') as csvfile:
 	readFILE = csv.reader(csvfile, delimiter=';')
 	for row in readFILE:
 		countries.append(row[0])
-
 mylist = countries
+
 from collections import defaultdict
 frequency = defaultdict(int)
 for x in mylist:
 	frequency[x] +=1
-
 print(frequency)
 
+print("===========")
+
+items = []
+for item in mylist:
+	if item not in items:
+		items.append(item)
+for item in sorted(items):
+	print(item, mylist.count(item))
+
+print("===========")
 
 num_lines = sum(1 for line in open('euro2016.csv'))
 print("The number of entries in the years 2013, 2014, 2015 and 2016 were in total:", num_lines) #number of entries in the years 2015 - 2016 in total 
@@ -230,7 +239,7 @@ def count_southern_slavic_countries(tokens):
 	first1 = tokens
 	count = 0
 	for token in first1:
-		if token in ['Bosnia and Herzegovina', 'Croatia', 'Serbia', 'Montenegro', 'Bulgaria', 'Macedonia']:
+		if token in ['Bosnia and Herzegovina', 'Croatia', 'Serbia', 'Serbia and Montenegro' 'Montenegro', 'Bulgaria', 'Macedonia']:
 			count +=1
 		else:
 			None
@@ -275,14 +284,14 @@ with open('euro2016.csv', 'r') as csvfile:
 	years = [0]
 	reader = csv.reader(csvfile, delimiter=';')
 	for row in reader:
-		years.append(row[2]) # 200
+		years.append(row[2]) 
 		#print(row[2])
 csvfile.close()
-separate_years = set(years) #200 lines
+separate_years = set(years) 
 separate_years.remove(0) #removed an unnecessary zero from the output. I had no idea where the zero came from, but the problem was easily solved this way.
 sorted_separate_years = sorted(separate_years)
 print("The years that were examined -summed up- are", sorted_separate_years)
-year_count = len(separate_years) #Number of years  								#200 LINES
+year_count = len(separate_years) #Number of years  								
 print("The amount of years that have been examined in this study equals the amount:", year_count)
 
 print("===========")
@@ -308,18 +317,7 @@ percentagesouthslavic = round(percentage(numberofsouthernslaviccountries, num_li
 print("The percentage of Southern Slavic countries partaking is:", percentagesouthslavic, "%")
 percentageother = round(percentage(numberofothercountries, num_lines), 2)
 print("The percentage of the 'odd ones out' partaking is:", percentageother, "%")
-#Nog te doen: percentage mooier ordenen! Minder decimalen. Extra uitdaging: % teken erachter
- 
-
-#CountryandScore = country + points
-#CountryandScore = Group(country.setResultsName("country")+points.setResultsName("score"))
-#euroResult = CountryandScore.setResultsName("country score")+year.setResultsName("year")
-#for result in eurosong:
-#	stats = (euroResult).parseString(test)
-#	if CountryandScore != CountryandScore:
-#		if points > points:
-#			result = "won by" + CountryandScore
-#print(result) #that did not work 
+#Nog te doen: percentage mooier ordenen! Minder decimalen. Extra uitdaging: % teken erachter 
 
 import csv
 from itertools import islice #islice = interesting little tool that I found on the world wide web
@@ -350,7 +348,7 @@ import csv
 with open('results2016.csv', 'w', newline='') as new_file: #newline='' addition: filters unattractive and bothersome newlines
 	writer = csv.writer(new_file)
 	writer.writerows(rowsyear2016)
-import csv
+import csv #250
 with open('results2016.csv', 'r') as csvfile:
 	datareader = csv.reader(csvfile)
 	#my_list = list(datareader)
@@ -378,9 +376,6 @@ for result in results:
 	result = int(result)
 	results1.append(result)
 
-scorebord2016 = zip(countries,results1)
-
-
 count = 0
 for country, result in zip(countries,results1):
 	if result > count:
@@ -389,7 +384,7 @@ for country, result in zip(countries,results1):
 	else:
 		None
 
-for country, result in zip(countries, results1):
+for country, result in zip(countries,results1):
 	if result < count:
 		loser = country
 		count = result
@@ -400,12 +395,6 @@ winnerresult = max(results1)
 loserresult = min(results1)
 print("The winner of Eurovision 2016 is:", winner, "with", winnerresult, "points.") 
 print("The loser of Eurovision 2016 is:", loser, "with", loserresult, "points.")
-
-#winningcountry = []
-#for row in mylist:
-#	winningcountry.append(row[1])
-#	print(max(winningcountry))
-
 
 lines.close()
 csvfile.close()
@@ -432,9 +421,6 @@ for row in rowsyear2015: #300
 pointspercountry2015 = list(zip(countries2015, points2015))
 pointspercountry2015sorted = sorted(pointspercountry2015)
 print(pointspercountry2015sorted) #300 LIJNEN
-#print(pointspercountry2015sorted)
-#34 new lines
-#OVERVLOEDIGE INFORMATIE = maar misschien kan hiermee later iets gedaan worden:
 
 print("===========")
 import csv
@@ -469,15 +455,17 @@ for result in results:
 	result = int(result)
 	results1.append(result)
 
+scorebord2015 = zip(countries,results1)
+
 count = 0
-for country, result in zip(countries,results1):
+for country, result in scorebord2015:
 	if result > count:
 		winner = country
 		count = result
 	else:
 		None
 
-for country, result in zip(countries, results1):
+for country, result in scorebord2015:
 	if result < count:
 		loser = country
 		count = result
@@ -554,9 +542,6 @@ for result in results:
 	result = int(result)
 	results1.append(result)
 
-scorebord2016 = zip(countries,results1)
-
-
 count = 0
 for country, result in zip(countries,results1):
 	if result > count:
@@ -565,7 +550,7 @@ for country, result in zip(countries,results1):
 	else:
 		None
 
-for country, result in zip(countries, results1):
+for country, result in zip(countries,results1):
 	if result < count:
 		loser = country
 		count = result
@@ -576,4 +561,63 @@ winnerresult = max(results1)
 loserresult = min(results1)
 print("The winner of Eurovision 2014 is:", winner, "with", winnerresult, "points.") 
 print("The loser of Eurovision 2014 is:", loser, "with", loserresult, "points.")
-# 355 + 62 = 417
+
+print("===========")
+
+import csv
+d = dict()
+#In the file 'resultsallyears' I use the same data as in the file 'euro2016', but I edited the results from 2016, because the results in this year were doubled
+#every country got to award two sets of votes: one from their professional jury and the other from televoting
+#Therefore, I divided the results of this year in two, otherwise it would give an unrealistic overview of the most successful countries. 
+with open('resultsallyears.csv', 'r') as csvfile:
+	readFILE = csv.reader(csvfile, delimiter=';')
+	countriesallyears = []
+	for row in readFILE:
+		if row[0] in countriesallyears:
+			d[row[0]] = d[row[0]] + int(row[1])
+		else:
+			countriesallyears.append(row[0])
+			d[row[0]] = int(row[1])
+csvfile.close()
+
+print(d) #type = dict
+
+print("===========")
+
+def keywithmaxval(d):
+	v = list(d.values())
+	k = list(d.keys())
+	return k[v.index(max(v))]
+
+mostsuccessfulcountry = keywithmaxval(d)
+print("The most successful country throughout the years of Eurovision was:", mostsuccessfulcountry)
+
+print("===========")
+def keywithminval(d):
+	v = list(d.values())
+	k = list(d.keys())
+	return k[v.index(min(v))]
+leastsuccesfulcountry = keywithminval(d)
+print("The least succesful country throughout the years of Eurovision was:", leastsuccesfulcountry)
+print("===========")
+top5countries = sorted(d, key =d.get, reverse=True)[:5]
+print("The top 5 most successful countries throughout the years of Eurovision were:")
+for x in top5countries:
+	print(top5countries.index(x) +1, end=' ')
+	print(" ", x)
+
+print("===========")
+print("The top 5 least successful countries throughout the years of Eurovision were:")
+top5losercountries = sorted(d, key =d.get, reverse=False)[:5]
+for x in top5losercountries:
+	print(top5losercountries.index(x) +1, end=' ')
+	print(" ", x)
+
+print("===========")
+print("The total ranking of all the countries is:")
+totalranking = sorted(d, key =d.get, reverse=True)
+for x in totalranking:
+	print(totalranking.index(x) +1, end=' ')
+	print(" ", x)
+
+#465 lijnen
