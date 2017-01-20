@@ -1,0 +1,17 @@
+In my programming code, I computated statistics of the Eurovision Songcontest.
+
+Initially I started out with Pyparsing. At first, I did a short testround with greetings to show some different aspects
+of Pyparsing. Then, I used Pyparsing to print the results of the Eurovision in a pretty context. I wanted to do more
+with Pyparsing, but after that I mainly focussed on getting the statistics and found out that Pyparsing wasn't a
+usefool tool to do that. However, Pyparsing can be very useful as a tool to quickly parse results and printing data in a
+pretty fashion. 
+
+In the rest of the file, I calculated lots of different things: most successful country in the 21st century based on
+scores (total amount of points given to a country between the years 2000-2016), the least succesful countries in the
+21st century, the total ranking of the countries based on popularity, the number ánd percentage of West-European countries
+/ Scandinavian Countries / Slavic countries, et cetera that have attended the contest, the most successful country based 
+on how many times x country has won the Eurovision Song Contest, the most successful gender / group formation among the 
+winners and the total number of winners (it's not what you think!) and the number of times each country was in the finals
+in the 21st century. 
+
+Hopefully, it will be an interesting read for outsiders, with some unexpected results! 
