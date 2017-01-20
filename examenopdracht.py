@@ -47,7 +47,7 @@ for i in range(10):
 	print("%s, say '%s' to %s." % ( random.choice( greetees ), "".join(random.choice( salutations )), random.choice(greetees)))
 stringEnd #it is important to properly 'close' your parser
 print("===========")
-#using a csvfile as it is very easy to collect data on these files 
+#Using a csvfile as it is very easy to collect data with these files 
 import csv
 with open('resulteurovision2016.csv', 'r') as csvfile:
 	datareader = csv.reader(csvfile)
@@ -58,9 +58,7 @@ text = csvfile.read()
 csvfile.close()
 eurosong = text.splitlines()
 
-#print(text) just to make sure everything went well: and it luckily did! 
 from pyparsing import Word, alphas, OneOrMore, nums, Group, Literal, Suppress, Combine 
-#word = Word( alphas +"'.")
 word = Word(alphas)
 num = Word(nums)
 country = OneOrMore(word)
@@ -69,8 +67,7 @@ year = Word(nums)
 weirdsymbol = Suppress(Literal(";"))
 annualscore = country + points + year
 annualscore1 = country + weirdsymbol + points + weirdsymbol + year 
-country.setParseAction(lambda tokens: " ".join(tokens)) #combines output like 'United' 'Kingdom' into ONE string, more pretty result
-points = Word(nums).setParseAction(lambda tokens: int(tokens[0])) #turns the numeric strings into actual integers, but does not seem to work yet
+country.setParseAction(lambda tokens: " ".join(tokens)) #combines output like 'United' 'Kingdom' into ONE string, more pretty result. 
 # Because at first I couldn't get the program to properly work, I did a short testround. 
 tests2 = """Bulgaria 206 2016
 Germany 0 2015
@@ -81,16 +78,15 @@ experiment = tests2.splitlines()
 for test in experiment:
 	simple_stats = annualscore.parseString(test)
 	print(simple_stats.asList()) #--> or
-print("Test round gone well, now we will move on to the real file.")
+#Test round gone well, now we will move on to the real file."
+print("===========")
 
 for result in eurosong:
 	stats = annualscore1.parseString(result)
 	print(stats.asList())
-
-#stringEnd
+stringEnd
 
 print("===========")
-#printing the countries
 import csv
 with open('euro2016.csv', 'r') as csvfile:
 	countries = []
@@ -104,7 +100,7 @@ frequency = defaultdict(int)
 for x in mylist:
 	frequency[x] +=1
 print(frequency)
-
+#counts the frequency of a country (stored in mylist) attending the finals between 2000 and 2016
 print("===========")
 
 items = []
@@ -112,28 +108,20 @@ for item in mylist:
 	if item not in items:
 		items.append(item)
 for item in sorted(items):
-	print(item, mylist.count(item))
-
-print("===========")
-
-num_lines = sum(1 for line in open('euro2016.csv'))
-print("The number of entries in the years 2013, 2014, 2015 and 2016 were in total:", num_lines) #number of entries in the years 2015 - 2016 in total 
-print("===========")
-averageamountcontestants = num_lines / 4
-print(averageamountcontestants)
-
+	print(item, mylist.count(item)) #counts the number of times one item (in this case: a country) occurs in a list
+#so in this case: the number of times a country was in the finals between 2000 and 2016
+#it does basically the same as the previous code, but it prints the results in a better way
 print("===========")
 unique_countries = set(countries)
-print("The total number of individual UNIQUE contestants is:", len(unique_countries)) 
+print("The total number of individual UNIQUE contestants in the years between 2000-2016 is:", len(unique_countries)) 
 print("===========")
-sorted_unique_countries = sorted(unique_countries) #prints the countries in alphabetical order, pretty
+sorted_unique_countries = sorted(unique_countries) #sorts the countries in an alphabetical order.
 for x in sorted_unique_countries:
-	print(sorted_unique_countries.index(x) +1, end=' ')
+	print(sorted_unique_countries.index(x) +1, end=' ') #countries shown in a numbered list in alphabetical order, from Albania (first) to United Kingdom (last)
 	print(" ", x)
 print("===========")
-#How many separate countries did parttake at the eurovision songcontest?
-# now we are going to divide the countries into Western Europe, Southern Europe, North Europe, Eastern Europe and 'others'
-#count = 1
+
+#Now I'm going to divide the countries into Western Europe, Southern Europe, North Europe, Eastern Europe and 'others'
 
 csvfile = open('euro2016.csv', 'r')
 readmyfile = csv.reader(csvfile, delimiter=';')
@@ -151,7 +139,7 @@ def count_westerncountries(tokens):
 
 print(count_westerncountries(mylist))
 numberofwesteuropeancountries = count_westerncountries(mylist)
-print("The number of West European entries, for instance from Germany or Belgium, in the years 2015-2016 -summed up- is:", numberofwesteuropeancountries)
+print("The number of West European entries, for instance from Germany or Belgium, in the years 2000-2016 -summed up- is:", numberofwesteuropeancountries)
 
 print("===========")
 
@@ -167,7 +155,7 @@ def count_northerncountries(tokens):
 
 print(count_northerncountries(mylist))
 numberofscandinaviancountries = count_northerncountries(mylist)
-print("The number of Scandinavian entries, for instance from Norway or Iceland, in the years 2015-2016 -summed up- is:", numberofscandinaviancountries)
+print("The number of Scandinavian entries, for instance from Norway or Iceland, in the years 2000-2016 -summed up- is:", numberofscandinaviancountries)
 
 print("===========")
 
@@ -183,7 +171,7 @@ def count_southerncountries(tokens):
 
 print(count_southerncountries(mylist))
 numberofsoutheuropeancountries = count_southerncountries(mylist)
-print("The number of South European entries, for instance Greece and Italy, in the years 2015-2016 -summed up- is:", numberofsoutheuropeancountries)
+print("The number of South European entries, for instance Greece and Italy, in the years 2000-2016 -summed up- is:", numberofsoutheuropeancountries)
 
 print("===========")
 
@@ -199,7 +187,7 @@ def count_balticstatesandfinland(tokens):
 
 print(count_balticstatesandfinland(mylist))
 numberofbalticcountries = count_balticstatesandfinland(mylist)
-print("The number of entries from the Baltic States and Finland, in the years 2015-2016 -summed up- is:", numberofbalticcountries)
+print("The number of entries from the Baltic States and Finland, in the years 2000-2016 -summed up- is:", numberofbalticcountries)
 
 print("===========")
 
@@ -215,7 +203,7 @@ def count_non_europeancountries(tokens):
 
 print(count_non_europeancountries(mylist))
 numberofnoneuropeancountries = count_non_europeancountries(mylist)
-print("The number of entries from Non-European countries, like Australia or Georgia, in the years 2015-2016 -summed up- is:", numberofnoneuropeancountries)
+print("The number of entries from Non-European countries, like Australia or Georgia, in the years 2000-2016 -summed up- is:", numberofnoneuropeancountries)
 
 print("===========")
 
@@ -231,7 +219,7 @@ def count_slavic_countries(tokens):
 
 print(count_slavic_countries(mylist))
 numberofslaviccountries = count_slavic_countries(mylist)
-print("The number of entries from Slavic countries, like Russia and Ukraine, in the years 2015-2016 -summed up- is:", numberofslaviccountries)
+print("The number of entries from Slavic countries, like Russia and Ukraine, in the years 2000-2016 -summed up- is:", numberofslaviccountries)
 
 print("===========")
 
@@ -247,7 +235,7 @@ def count_southern_slavic_countries(tokens):
 
 print(count_southern_slavic_countries(mylist))
 numberofsouthernslaviccountries = count_southern_slavic_countries(mylist)
-print("The number of entries from Southern Slavic countries, like Serbia and Croatia, in the years 2015-2016 -summed up- is:", numberofsouthernslaviccountries)
+print("The number of entries from Southern Slavic countries, like Serbia and Croatia, in the years 2000-2016 -summed up- is:", numberofsouthernslaviccountries)
 
 print("===========")
 
@@ -269,38 +257,32 @@ print("===========")
 
 import csv
 with open('euro2016.csv', 'r') as csvfile:
-	points = []
-	readFILE = csv.reader(csvfile, delimiter=';')
-	for row in readFILE:
-		points.append(row[1])
-
-#pointspercountry = list(zip(countries, points))
-#filter = sorted(pointspercountry)
-
-csvfile.close()
-
-import csv
-with open('euro2016.csv', 'r') as csvfile:
 	years = [0]
 	reader = csv.reader(csvfile, delimiter=';')
 	for row in reader:
 		years.append(row[2]) 
-		#print(row[2])
+
 csvfile.close()
+
 separate_years = set(years) 
 separate_years.remove(0) #removed an unnecessary zero from the output. I had no idea where the zero came from, but the problem was easily solved this way.
 sorted_separate_years = sorted(separate_years)
-print("The years that were examined -summed up- are", sorted_separate_years)
+print("The years that have been examined -summed up- are", sorted_separate_years)
 year_count = len(separate_years) #Number of years  								
 print("The amount of years that have been examined in this study equals the amount:", year_count)
 
 print("===========")
 
+num_lines = sum(1 for line in open('euro2016.csv')) #simple sum operation: each line represents one entry
+print("The number of entries in the years 2000 - 2016 were in total:", num_lines) #number of entries in the years 2000 - 2016 in total 
+print("===========")
+averageamountcontestants = num_lines / year_count
+print("The average number of contestants in each final in the years 2000 - 2016 is:", round(averageamountcontestants))
+print("===========")
+
 def percentage(part, whole):
 	return 100 * float(part)/float(whole)
 #Statistics
-#percentagewestern = percentage(numberofwesteuropeancountries, num_lines)
-#print("The percentage of West-European countries partaking is:", percentagewestern,"%")
 percentagewestern = round(percentage(numberofwesteuropeancountries, num_lines), 2) #round(x, 2) --> limiting floats to two decimal points
 print("The percentage of West-European countries partaking is:", percentagewestern,"%")
 percentagenorthern = round(percentage(numberofscandinaviancountries, num_lines), 2)
@@ -317,18 +299,15 @@ percentagesouthslavic = round(percentage(numberofsouthernslaviccountries, num_li
 print("The percentage of Southern Slavic countries partaking is:", percentagesouthslavic, "%")
 percentageother = round(percentage(numberofothercountries, num_lines), 2)
 print("The percentage of the 'odd ones out' partaking is:", percentageother, "%")
-#Nog te doen: percentage mooier ordenen! Minder decimalen. Extra uitdaging: % teken erachter 
 
 import csv
 from itertools import islice #islice = interesting little tool that I found on the world wide web
-#prevented me from writing a difficult def function
+#prevented me from writing lots of difficult code
 with open('euro2016.csv', 'r') as lines:
 	rowsyear2016 = []
 	reader = csv.reader(lines, delimiter=';')
 	for line in islice(reader, 0, 26):
 		rowsyear2016.append(line)
-
-#csv.writer(new_file).writerows(rowsyear2016)
 
 countries2016 = []
 for row in rowsyear2016:
@@ -338,9 +317,11 @@ points2016 = []
 for row in rowsyear2016:
 	points2016.append(row[1])
 
+print("===========")
+
 pointspercountry2016 = list(zip(countries2016, points2016))
 pointspercountry2016sorted = sorted(pointspercountry2016)
-#print(pointspercountry2016sorted)
+print(pointspercountry2016sorted) #with zipping the countries and the points, there is an easy way to print all the results.
 
 print("===========")
 
@@ -414,15 +395,6 @@ for row in rowsyear2015:
 print("Countries that were in the finals in 2015:", sorted(countries2015))
 
 print("===========")
-
-points2015 = []
-for row in rowsyear2015: #300
-	points2015.append(row[1])
-pointspercountry2015 = list(zip(countries2015, points2015))
-pointspercountry2015sorted = sorted(pointspercountry2015)
-print(pointspercountry2015sorted) #300 LIJNEN
-
-print("===========")
 import csv
 with open('results2015.csv', 'w', newline='') as new_file: #newline='' addition: filters unattractive and bothersome newlines
 	writer = csv.writer(new_file)
@@ -476,14 +448,9 @@ loserresult = min(results1)
 print("The winner of Eurovision 2015 is:", winner, "with", winnerresult, "points.") 
 print("The loser of Eurovision 2015 is:", loser, "with", loserresult, "points.")
 
-secondplace = max(n for n in results1 if n!=max(results1))
-print(secondplace)
-
-points2016sorted = [int(x) for x in points2016]
-points2016sorted.sort()
-print(points2016sorted)
-
 lines.close()
+
+print("===========")
 
 import csv
 from itertools import islice #islice = interesting little tool that I found on the world wide web
@@ -494,19 +461,11 @@ with open('euro2016.csv', 'r') as lines:
 	for line in islice(reader, 53, 79):
 		rowsyear2014.append(line)
 
-#csv.writer(new_file).writerows(rowsyear2016)
 
 countries2014 = []
 for row in rowsyear2014:
 	countries2014.append(row[0])
 print("Countries that were in the finals in 2014:", sorted(countries2014))
-points2014 = []
-for row in rowsyear2014:
-	points2014.append(row[1])
-
-pointspercountry2014 = list(zip(countries2014, points2014))
-pointspercountry2014sorted = sorted(pointspercountry2014)
-#print(pointspercountry2016sorted)
 
 print("===========")
 
@@ -517,11 +476,10 @@ with open('results2014.csv', 'w', newline='') as new_file: #newline='' addition:
 import csv
 with open('results2014.csv', 'r') as csvfile:
 	datareader = csv.reader(csvfile)
-	#my_list = list(datareader)
 	with open('results2014firstedit.csv', 'w', newline='') as editfile:
 		writer = csv.writer(editfile)
 		for x in datareader:
-			writer.writerow((x[0], x[1])) #writing only the first two rows into the file, deleting the year-information '2016' [2]
+			writer.writerow((x[0], x[1])) #writing only the first two rows into the file, deleting the year-information '2014' [2]
 csvfile.close()
 new_file.close()
 editfile.close()
@@ -580,6 +538,7 @@ with open('resultsallyears.csv', 'r') as csvfile:
 			d[row[0]] = int(row[1])
 csvfile.close()
 
+
 print(d) #type = dict
 
 print("===========")
@@ -590,34 +549,116 @@ def keywithmaxval(d):
 	return k[v.index(max(v))]
 
 mostsuccessfulcountry = keywithmaxval(d)
-print("The most successful country throughout the years of Eurovision was:", mostsuccessfulcountry)
-
+print("The most successful country of the years 2000-2016 of Eurovision was:", mostsuccessfulcountry)
+#Returns the country that got the maximum amount of points
 print("===========")
 def keywithminval(d):
 	v = list(d.values())
 	k = list(d.keys())
 	return k[v.index(min(v))]
 leastsuccesfulcountry = keywithminval(d)
-print("The least succesful country throughout the years of Eurovision was:", leastsuccesfulcountry)
+print("The least succesful country of the years 2000-2016 of Eurovision was:", leastsuccesfulcountry)
 print("===========")
 top5countries = sorted(d, key =d.get, reverse=True)[:5]
-print("The top 5 most successful countries throughout the years of Eurovision were:")
+print("The top 5 most successful countries of the years 2000-2016 of Eurovision were:")
 for x in top5countries:
 	print(top5countries.index(x) +1, end=' ')
 	print(" ", x)
-
+#Returns a top 5 of most successful countries
 print("===========")
-print("The top 5 least successful countries throughout the years of Eurovision were:")
+print("The top 5 least successful countries of the years 2000-2016 of Eurovision were:")
 top5losercountries = sorted(d, key =d.get, reverse=False)[:5]
 for x in top5losercountries:
 	print(top5losercountries.index(x) +1, end=' ')
 	print(" ", x)
-
+#Returns a top 5 of least successful countries
 print("===========")
-print("The total ranking of all the countries is:")
+print("The total ranking of all the countries of the years 2000-2016 is:")
 totalranking = sorted(d, key =d.get, reverse=True)
 for x in totalranking:
 	print(totalranking.index(x) +1, end=' ')
 	print(" ", x)
+#Returns the total ranking of all the countries
 
-#465 lijnen
+print("===========")
+import csv
+with open('countrieseurovision.csv', 'r') as file:
+	alluniquecountries = [] #A list of ALL the unique countries that ever attended Eurovision, including Morocco (participated only 1 time)
+	readFILE = csv.reader(file, delimiter=';')
+	for row in readFILE:
+		alluniquecountries.append(row[0])
+
+file.close()
+
+number_unique_countries = len(alluniquecountries)
+print(number_unique_countries)
+
+import csv
+with open('winnerseurovision.csv', 'r') as csvfile:
+	countries = []
+	genderorgroup = []
+	readFILE = csv.reader(csvfile, delimiter=';')
+	for row in readFILE:
+		countries.append(row[0])
+		genderorgroup.append(row[1])
+mylist = countries
+mylist2 = genderorgroup
+
+from collections import defaultdict
+frequency = defaultdict(int)
+for x in mylist:
+	frequency[x] +=1
+print(frequency)
+
+print("===========")
+
+from collections import defaultdict
+frequency1 = defaultdict(int)
+for x in mylist2:
+	frequency1[x] +=1
+print(frequency1)
+
+print("===========")
+
+def percentage(part, whole):
+	return 100 * float(part)/float(whole)
+
+winners = set(mylist)
+winnercount = len(winners)
+print("The amount of countries that have won the Eurovision is:", winnercount)
+print("The total amount of individual UNIQUE contestants throughout all the years of Eurovision is:", number_unique_countries)
+percentagewinningcountries = round(percentage(winnercount, number_unique_countries), 2)
+print("The percentage of all the countries, that were ever in Eurovision, that have won the Eurovision Songcontest is:", percentagewinningcountries, "%")
+percentagenotwinningcountries = 100 - percentagewinningcountries
+print("The percentage of countries partaking that have never won the Eurovision is:", percentagenotwinningcountries, "%")
+
+print("===========")
+
+from collections import Counter 
+
+def most_common(mylist):
+	data = Counter(mylist)
+	return data.most_common(1)[0][0]
+
+print("The country that has won Eurovision the most times is:", most_common(mylist))
+
+print("===========")
+
+def most_common(mylist2):
+	data = Counter(mylist2)
+	return data.most_common(1)[0][0]
+
+print("The most successful gender in the history of Eurovision has been:", most_common(mylist2))
+
+print("===========")
+
+import csv
+with open('winnerseurovision.csv', 'r') as csvfile:
+	years = []
+	reader = csv.reader(csvfile, delimiter=';')
+	for row in reader:
+		years.append(row[2]) 
+csvfile.close()
+separate_years = sorted(set(years))
+year_count = len(separate_years)							
+print("The amount of years that have been examined in the winner study equals the amount:", year_count)
