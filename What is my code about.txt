@@ -14,4 +14,6 @@ on how many times x country has won the Eurovision Song Contest, the most succes
 winners and the total number of winners (it's not what you think!) and the number of times each country was in the finals
 in the 21st century. 
 
+Lastly, I used some new tools, like itertools and collections. 
+
 Hopefully, it will be an interesting read for outsiders, with some unexpected results! 
